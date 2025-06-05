@@ -1,0 +1,50 @@
+﻿@model GestionTicketsDB.Models.usuarios
+
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="id_usuario" />
+
+    <div class="form-group">
+        <label asp-for="nombre"></label>
+        <input asp-for="nombre" class="form-control" />
+        <span asp-validation-for="nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="genero"></label>
+        <input asp-for="genero" class="form-control" />
+        <span asp-validation-for="genero" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="telefono"></label>
+        <input asp-for="telefono" class="form-control" />
+        <span asp-validation-for="telefono" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="correo_electronico"></label>
+        <input asp-for="correo_electronico" class="form-control" />
+        <span asp-validation-for="correo_electronico" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="contrasena"></label>
+        <input asp-for="contrasena" type="password" class="form-control" />
+        <span asp-validation-for="contrasena" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

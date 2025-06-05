@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GestionTicketsDB.Models.usuarios>
+
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Usuario</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Género</th>
+            <th>Teléfono</th>
+            <th>Correo Electrónico</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+                <tr>
+                    <td>@usuario.nombre</td>
+                    <td>@usuario.genero</td>
+                    <td>@usuario.telefono</td>
+                    <td>@usuario.correo_electronico</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@usuario.id_usuario" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@usuario.id_usuario" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

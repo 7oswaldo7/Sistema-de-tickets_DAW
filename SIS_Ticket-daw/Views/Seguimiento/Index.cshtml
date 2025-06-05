@@ -1,0 +1,83 @@
+﻿@model IEnumerable<GestionTicketsDB.Models.tickets>
+
+@{
+    ViewData["Title"] = "Seguimiento y Asignación de Tareas";
+}
+
+<h1>Seguimiento y Asignación de Tareas</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha de Creación</th>
+            <th>Estado</th>
+            <th>Usuario</th>
+            <th>Asignado a</th>
+            <th>Comentarios</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.titulo</td>
+                <td>@ticket.descripcion</td>
+                <td>@ticket.fecha_creacion.ToString("dd/MM/yyyy")</td>
+                <td>@(ticket.estado_tickets?.estado ?? "No asignado")</td>
+                <td>@(ticket.usuarios?.nombre ?? "Sin usuario")</td>
+                <td>
+                    @if (ticket.asignacion_tickets != null && ticket.asignacion_tickets.Any())
+                    {
+                        foreach (var asignacion in ticket.asignacion_tickets)
+                        {
+                            <div>@(asignacion.empleados?.usuarios?.nombre ?? "Empleado desconocido")</div>
+                        }
+                    }
+                    else
+                    {
+                        <span>No asignado</span>
+                    }
+                </td>
+                <td>
+                    @if (ticket.comentarios != null && ticket.comentarios.Any())
+                    {
+                        foreach (var comentario in ticket.comentarios)
+                        {
+                            <div>
+                                <strong>@comentario.estado:</strong> @comentario.comentario_texto
+                                <br /><small>@comentario.fecha_asignacion.ToString("g")</small>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <span>Sin comentarios</span>
+                    }
+                </td>
+                <td>
+                    <!-- Formulario para asignar empleado -->
+                    <form asp-action="AsignarEmpleado" method="post">
+                        <input type="hidden" name="ticketId" value="@ticket.id_ticket" />
+                        <select name="empleadoId" class="form-select form-select-sm" required>
+                            @* Aquí deberías cargar una lista de empleados desde el ViewBag o ViewModel si deseas seleccionar *@
+                            <option value="">-- Seleccionar --</option>
+                            <option value="1">Empleado 1</option>
+                            <option value="2">Empleado 2</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary mt-1">Asignar</button>
+                    </form>
+
+                    <!-- Formulario para agregar comentario -->
+                    <form asp-action="AgregarComentario" method="post" class="mt-2">
+                        <input type="hidden" name="ticketId" value="@ticket.id_ticket" />
+                        <input type="text" name="comentarioTexto" placeholder="Nuevo comentario" class="form-control form-control-sm" required />
+                        <button type="submit" class="btn btn-sm btn-secondary mt-1">Comentar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

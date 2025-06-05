@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Informes y Dashboard";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h3>Dashboard General</h3>
+    <ul>
+        <li>Total Tickets: @ViewBag.TotalTickets</li>
+        <li>Tickets Abiertos: @ViewBag.TicketsAbiertos</li>
+        <li>Tickets Cerrados: @ViewBag.TicketsCerrados</li>
+        <li>Tickets Asignados: @ViewBag.TicketsAsignados</li>
+    </ul>
+</div>
+
+<div>
+    <h3>Informe: Tickets por Estado</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var estado in ViewBag.TicketsPorEstado)
+            {
+                <tr>
+                    <td>@estado.Estado</td>
+                    <td>@estado.Conteo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Informe: Tickets por Prioridad</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prioridad</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prioridad in ViewBag.TicketsPorPrioridad)
+            {
+                <tr>
+                    <td>@prioridad.Prioridad</td>
+                    <td>@prioridad.Conteo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

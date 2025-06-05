@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GestionTicketsDB.Models.asignacion_tickets>
+
+@{
+    ViewData["Title"] = "Gestión de Tickets";
+}
+
+<h2>Tickets asignados</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Usuario</th>
+            <th>Estado</th>
+            <th>Fecha Creación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var asignacion in Model)
+        {
+            var ticket = asignacion.tickets;
+                <tr>
+                    <td>@ticket.titulo</td>
+                    <td>@ticket.usuarios.nombre</td>
+                    <td>@ticket.estado_tickets.estado</td>
+                    <td>@ticket.fecha_creacion.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@ticket.id_ticket" class="btn btn-primary btn-sm">Editar</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

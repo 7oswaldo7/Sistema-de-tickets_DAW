@@ -1,0 +1,71 @@
+﻿@model SIS_Ticket_daw.Models.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Mis Tickets";
+}
+
+<h2>Mis Tickets</h2>
+
+<!-- Formulario para crear un nuevo ticket -->
+<h3>Crear Ticket</h3>
+<form asp-action="CrearTicket" method="post">
+    <div class="form-group">
+        <label for="titulo">Título del Ticket</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" required />
+    </div>
+
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <select class="form-control" id="categoria" name="categoria" required>
+            @foreach (var categoria in Model.Categorias)
+            {
+                <option value="@categoria.id_categoria_ticket">@categoria.nombre_categoria</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="prioridad">Prioridad</label>
+        <select class="form-control" id="prioridad" name="prioridad" required>
+            @foreach (var prioridad in Model.Prioridades)
+            {
+                <option value="@prioridad.id_prioridad">@prioridad.nivel_prioridad</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear Ticket</button>
+</form>
+
+<hr />
+
+<!-- Mostrar los tickets creados por el cliente -->
+<h3>Mis Tickets</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha de Creación</th>
+            <th>Prioridad</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model.Tickets)
+        {
+            <tr>
+                <td>@ticket.titulo</td>
+                <td>@ticket.descripcion</td>
+                <td>@ticket.fecha_creacion</td>
+                <td>@ticket.prioridades_tickets.nivel_prioridad</td>
+                <td>@ticket.estado_tickets.estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
