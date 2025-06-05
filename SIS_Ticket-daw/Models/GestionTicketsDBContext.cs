@@ -27,23 +27,6 @@ namespace SIS_Ticket_daw.Models
         public DbSet<comentarios> comentarios { get; set; }
         public DbSet<archivos_comentarios> archivos_comentarios { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);  // Asegúrate de llamar al método base
-
-            // Configurar relaciones con eliminación restrictiva (evitar eliminación en cascada)
-            modelBuilder.Entity<asignacion_tickets>()
-                .HasOne(a => a.tickets)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);  // Evita la eliminación en cascada
-
-            modelBuilder.Entity<asignacion_tickets>()
-                .HasOne(a => a.empleados)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);  // Evita la eliminación en cascada
-
-
-        }
     }
 }
 
